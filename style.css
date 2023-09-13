@@ -1,7 +1,27 @@
-body{
-    background-color: red;
-}
-
 i{
     color: white;
+
+}
+
+#button{
+    background-color: red;
+    padding: 10px 25px;
+    border-radius: 35%;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+#button:hover{
+    cursor: pointer;
+}
+
+body{
+    text-align: center;
+}
+
+hr{
+    margin: 0 250px;
+}
+
+.box{
+    font-size: 25px;
 }
