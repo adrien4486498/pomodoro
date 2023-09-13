@@ -2,6 +2,7 @@
 const timerElement = document.getElementById('timer');
 const startButton = document.getElementById('button');
 
+
 let timerInterval;
 let minutes = 25;
 let seconds = 0;
@@ -12,33 +13,36 @@ function updateTimer() {
   timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 }
 
-// Fonction pour démarrer le minuteur
+// Fonction pour démarrer ou annuler le minuteur
 function startTimer() {
-  if (!isRunning) {
-    isRunning = true;
-    startButton.disabled = true;
-    timerInterval = setInterval(function() {
-      if (minutes === 0 && seconds === 0) {
-        clearInterval(timerInterval);
-        isRunning = false;
-        startButton.disabled = false;
-        // Redémarrez automatiquement le minuteur à la fin du temps (25 minutes)
-        minutes = 25;
-        seconds = 0;
-        updateTimer();
-        startTimer();
-      } else {
-        if (seconds === 0) {
-          minutes--;
-          seconds = 59;
+    if (isRunning) {
+      clearInterval(timerInterval);
+      isRunning = false;
+      startButton.innerHTML = '<i class="fa-solid fa-play"></i>'; // Changez le texte ou l'icône du bouton pour indiquer le démarrage
+    } else {
+      isRunning = true;
+      startButton.innerHTML = '<i class="fa-solid fa-pause"></i>'; // Changez le texte ou l'icône du bouton pour indiquer l'arrêt
+      timerInterval = setInterval(function () {
+        if (minutes === 0 && seconds === 0) {
+          clearInterval(timerInterval);
+          isRunning = false;
+          startButton.innerHTML = '<i class="fa-solid fa-play"></i>'; // Changez le texte ou l'icône du bouton pour indiquer le démarrage
+          // Redémarrez automatiquement le minuteur à la fin du temps (25 minutes)
+          minutes = 25;
+          seconds = 0;
+          updateTimer();
         } else {
-          seconds--;
+          if (seconds === 0) {
+            minutes--;
+            seconds = 59;
+          } else {
+            seconds--;
+          }
+          updateTimer();
         }
-        updateTimer();
-      }
-    }, 1000);
+      }, 1000);
+    }
   }
-}
 
 // Écouteur d'événement pour le bouton de démarrage
 startButton.addEventListener('click', startTimer);
