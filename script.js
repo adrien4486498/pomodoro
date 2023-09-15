@@ -2,11 +2,13 @@
 const timerElement = document.getElementById('timer');
 const startButton = document.getElementById('buttonStart');
 const boxElement = document.querySelector('.box');
+const workDurationInput = document.getElementById('workDuration');
+const breakDurationInput = document.getElementById('breakDuration');
 
 
 let timerInterval;
 let minutes = 0;
-let seconds = 15;
+let seconds = 0;
 let isWorking = true; // Indicateur pour suivre si le minuteur est en mode travail ou pause
 
 // Fonction pour mettre à jour l'affichage du minuteur
@@ -20,25 +22,16 @@ function startTimer() {
         clearInterval(timerInterval);
         timerInterval = null;
         isWorking = true;
-        minutes = 0;
-        seconds = 15;
+        minutes = parseInt(workDurationInput.value);
+        seconds = 0;
+        boxElement.textContent = 'Travail';
         startButton.innerHTML = '<i class="fa-solid fa-play"></i>';
         updateTimer();
     } else {
         startButton.innerHTML = '<i class="fa-solid fa-stop"></i>';
-        if (minutes === 0 && seconds === 0) {
-            // Si le minuteur est en mode travail ou pause et se termine, bascule automatiquement en mode travail
-            minutes = 0;
-            seconds = 15;
-            isWorking = true;
-        }
-        if (isWorking) {
-            // Met à jour le texte "Travail" si le minuteur est en mode travail
-            boxElement.textContent = 'Travail';
-        } else {
-            // Met à jour le texte "Travail" immédiatement avant de démarrer l'intervalle
-            boxElement.textContent = 'Pause';
-        }
+        minutes = parseInt(isWorking ? workDurationInput.value : breakDurationInput.value);
+        seconds = 0;
+        boxElement.textContent = isWorking ? 'Travail' : 'Pause';
         timerInterval = setInterval(function () {
             if (minutes === 0 && seconds === 0) {
                 clearInterval(timerInterval);
@@ -46,14 +39,14 @@ function startTimer() {
                 startButton.innerHTML = '<i class="fa-solid fa-play"></i>';
                 if (isWorking) {
                     // Si le minuteur est en mode travail, bascule automatiquement en mode pause
-                    minutes = 0;
-                    seconds = 5;
+                    minutes = parseInt(breakDurationInput.value);
+                    boxElement.textContent = 'Pause';
                     isWorking = false;
                     startTimer(); // Démarre automatiquement le minuteur de pause
                 } else {
                     // Si le minuteur est en mode pause, bascule automatiquement en mode travail
-                    minutes = 0;
-                    seconds = 15;
+                    minutes = parseInt(workDurationInput.value);
+                    boxElement.textContent = 'Travail';
                     isWorking = true;
                     startTimer(); // Démarre automatiquement le minuteur de travail
                 }

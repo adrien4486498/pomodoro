@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,18 +8,29 @@
     <link rel="stylesheet" href="style.css">
     <title>Pomodoro</title>
 </head>
+
 <body>
-    <h1> Timer Pomodoro </h1><hr><br>
+    <h1> Timer Pomodoro </h1>
+    <hr><br>
 
     <div class="box">
-        
+
     </div>
 
-    <h1 id="timer">  </h1>
+    <h1 id="timer"> </h1>
 
 
     <button id="buttonStart"><i class="fa-solid fa-play"></i></button>
-    
+    <br><br><br><br><br>
+
+    <label for="workDuration">Durée de travail (minutes) : </label>
+    <input type="number" id="workDuration" min="1" value="25">
+    <br><br>
+    <label for="breakDuration">Durée de pause (minutes) : </label>
+    <input type="number" id="breakDuration" min="1" value="5">
+    <br>
+
     <script src="script.js"></script>
 </body>
+
 </html>
