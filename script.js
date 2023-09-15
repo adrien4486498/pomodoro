@@ -16,6 +16,8 @@ function updateTimer() {
     timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 }
 
+
+
 // Fonction pour démarrer ou annuler le minuteur
 function startTimer() {
     if (timerInterval) {
@@ -58,10 +60,32 @@ function startTimer() {
                     seconds--;
                 }
                 updateTimer();
+                updateLine();
             }
         }, 1000);
     }
 }
+
+// Fonction pour mettre à jour la largeur de la ligne en fonction du temps restant
+function updateLine() {
+    const totalSeconds = minutes * 60 + seconds;
+    const initialWorkMinutes = parseInt(workDurationInput.value);
+    const initialBreakMinutes = parseInt(breakDurationInput.value);
+    const totalWorkSeconds = initialWorkMinutes * 60;
+    const totalBreakSeconds = initialBreakMinutes * 60;
+    const maxWidth = 100; // Largeur maximale en pourcentage (100%)
+    
+    let currentWidth = 0;
+
+    if (isWorking) {
+        currentWidth = ((totalWorkSeconds - totalSeconds) / totalWorkSeconds) * maxWidth;
+    } else {
+        currentWidth = ((totalBreakSeconds - totalSeconds) / totalBreakSeconds) * maxWidth;
+    }
+
+    document.querySelector('.line').style.width = `${currentWidth}%`;
+}
+
 
 
 // Écouteur d'événement pour le bouton de démarrage
