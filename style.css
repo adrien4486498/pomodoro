@@ -39,3 +39,11 @@ hr {
     height: 5px;
     transition: width 1s linear;
 }
+
+#workMinutes, #breakMinutes{
+    margin-left: 10%;
+}
+
+#workSeconds, #breakSeconds{
+    margin-left: 9%;
+}

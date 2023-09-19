@@ -2,8 +2,11 @@
 const timerElement = document.getElementById('timer');
 const startButton = document.getElementById('buttonStart');
 const boxElement = document.querySelector('.box');
-const workDurationInput = document.getElementById('workDuration');
-const breakDurationInput = document.getElementById('breakDuration');
+const workMinutesInput = document.getElementById('workMinutes');
+const workSecondsInput = document.getElementById('workSeconds');
+const breakMinutesInput = document.getElementById('breakMinutes');
+const breakSecondsInput = document.getElementById('breakSeconds');
+
 
 
 let timerInterval;
@@ -24,15 +27,16 @@ function startTimer() {
         clearInterval(timerInterval);
         timerInterval = null;
         isWorking = true;
-        minutes = parseInt(workDurationInput.value);
-        seconds = 0;
+        minutes = parseInt(workMinutesInput.value);
+        seconds = parseInt(workSecondsInput.value);
         boxElement.textContent = 'Travail';
         startButton.innerHTML = '<i class="fa-solid fa-play"></i>';
         updateTimer();
+        updateLine(); // Réinitialise la ligne de progression
     } else {
         startButton.innerHTML = '<i class="fa-solid fa-stop"></i>';
-        minutes = parseInt(isWorking ? workDurationInput.value : breakDurationInput.value);
-        seconds = 0;
+        minutes = parseInt(isWorking ? workMinutesInput.value : breakMinutesInput.value);
+        seconds = parseInt(isWorking ? workSecondsInput.value : breakSecondsInput.value);
         boxElement.textContent = isWorking ? 'Travail' : 'Pause';
         timerInterval = setInterval(function () {
             if (minutes === 0 && seconds === 0) {
@@ -41,13 +45,15 @@ function startTimer() {
                 startButton.innerHTML = '<i class="fa-solid fa-play"></i>';
                 if (isWorking) {
                     // Si le minuteur est en mode travail, bascule automatiquement en mode pause
-                    minutes = parseInt(breakDurationInput.value);
+                    minutes = parseInt(breakMinutesInput.value);
+                    seconds = parseInt(breakSecondsInput.value);
                     boxElement.textContent = 'Pause';
                     isWorking = false;
                     startTimer(); // Démarre automatiquement le minuteur de pause
                 } else {
                     // Si le minuteur est en mode pause, bascule automatiquement en mode travail
-                    minutes = parseInt(workDurationInput.value);
+                    minutes = parseInt(workMinutesInput.value);
+                    seconds = parseInt(workSecondsInput.value);
                     boxElement.textContent = 'Travail';
                     isWorking = true;
                     startTimer(); // Démarre automatiquement le minuteur de travail
@@ -69,12 +75,14 @@ function startTimer() {
 // Fonction pour mettre à jour la largeur de la ligne en fonction du temps restant
 function updateLine() {
     const totalSeconds = minutes * 60 + seconds;
-    const initialWorkMinutes = parseInt(workDurationInput.value);
-    const initialBreakMinutes = parseInt(breakDurationInput.value);
-    const totalWorkSeconds = initialWorkMinutes * 60;
-    const totalBreakSeconds = initialBreakMinutes * 60;
+    const initialWorkMinutes = parseInt(workMinutesInput.value);
+    const initialWorkSeconds = parseInt(workSecondsInput.value);
+    const initialBreakMinutes = parseInt(breakMinutesInput.value);
+    const initialBreakSeconds = parseInt(breakSecondsInput.value);
+    const totalWorkSeconds = initialWorkMinutes * 60 + initialWorkSeconds;
+    const totalBreakSeconds = initialBreakMinutes * 60 + initialBreakSeconds;
     const maxWidth = 100; // Largeur maximale en pourcentage (100%)
-    
+
     let currentWidth = 0;
 
     if (isWorking) {

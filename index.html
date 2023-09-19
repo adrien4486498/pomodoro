@@ -27,11 +27,17 @@
     <button id="buttonStart"><i class="fa-solid fa-play"></i></button>
     <br><br><br><br><br>
 
-    <label for="workDuration">Durée de travail (minutes) : </label>
-    <input type="number" id="workDuration" min="1" value="25">
-    <br><br>
-    <label for="breakDuration">Durée de pause (minutes) : </label>
-    <input type="number" id="breakDuration" min="1" value="5">
+    <label for="workMinutes">Durée de travail (minutes) : </label>
+    <input type="number" id="workMinutes" min="0" value="25">
+    <br>
+    <label for="workSeconds">Durée de travail (secondes) : </label>
+    <input type="number" id="workSeconds" min="0" value="0">
+    <br><br><br>
+    <label for="breakMinutes">Durée de pause (minutes) : </label>
+    <input type="number" id="breakMinutes" min="0" value="5">
+    <br>
+    <label for="breakSeconds">Durée de pause (secondes) : </label>
+    <input type="number" id="breakSeconds" min="0" value="0">
     <br>
 
     <script src="script.js"></script>
